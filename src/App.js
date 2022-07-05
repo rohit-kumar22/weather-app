@@ -99,7 +99,9 @@ function App() {
                     </p>
                     <br></br>
                   </div>
-                  <div className="col-sm-12" style={{ textAlign: "center" }}>
+                  <div
+                    className="col-sm-12"
+                    style={{ textAlign: "center", color: "white" }}>
                     <p>{data?.location?.localtime}</p>
                   </div>
                   <div className="col-sm-4 "> </div>
@@ -119,6 +121,12 @@ function App() {
                   </div>
                   <div className="table-div">
                     <table>
+                      <tr>
+                        <td>Location</td>
+                        <td>
+                          {data?.location?.region}/{data?.location?.country}
+                        </td>
+                      </tr>
                       <tr>
                         <td>Feels Like</td>
                         <td>{data?.current?.feelslike}°C</td>

@@ -15,7 +15,7 @@ h1{
   
 }
 .right-detail-info{
-  background-color: rgba(0, 0, 0, 0.3);
+/*  */
   height: 100vh;
 
 }
@@ -89,7 +89,7 @@ h1{
   padding: 2rem;
   font-size: 1.25rem;
   font-weight: 600;
-  color: #ffffff6c;
+  color: #ffffff;
   margin-top: 10rem;
   margin-left: 2rem;
 }
@@ -98,7 +98,7 @@ padding: 1rem;
 }
 
 .col-5{
-  background: linear-gradient(315deg, #6daddb 0%, #313131 74%);
+  background: linear-gradient(315deg, #6daddb6a 0%, #31313172 74%);
 }
 .fade-in-animation{
   animation-name: fade-in;
