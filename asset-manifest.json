@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/weather-app.github.io/static/css/main.ee82815c.css",
-    "main.js": "/weather-app.github.io/static/js/main.0409ab5f.js",
+    "main.css": "/weather-app.github.io/static/css/main.33a293f7.css",
+    "main.js": "/weather-app.github.io/static/js/main.e320d571.js",
     "static/media/winds.jpg": "/weather-app.github.io/static/media/winds.e89d2e764628a2e065b4.jpg",
     "static/media/sunny.jpg": "/weather-app.github.io/static/media/sunny.732d14b1ff4f34465ff2.jpg",
     "static/media/clouds.jpg": "/weather-app.github.io/static/media/clouds.bb0f8f2ca3c9ec988594.jpg",
@@ -10,11 +10,11 @@
     "static/media/thunderstorm.jpg": "/weather-app.github.io/static/media/thunderstorm.0802c1864e3878c771f0.jpg",
     "static/media/snow.jpg": "/weather-app.github.io/static/media/snow.9a418dfb64a6db348863.jpg",
     "index.html": "/weather-app.github.io/index.html",
-    "main.ee82815c.css.map": "/weather-app.github.io/static/css/main.ee82815c.css.map",
-    "main.0409ab5f.js.map": "/weather-app.github.io/static/js/main.0409ab5f.js.map"
+    "main.33a293f7.css.map": "/weather-app.github.io/static/css/main.33a293f7.css.map",
+    "main.e320d571.js.map": "/weather-app.github.io/static/js/main.e320d571.js.map"
   },
   "entrypoints": [
-    "static/css/main.ee82815c.css",
-    "static/js/main.0409ab5f.js"
+    "static/css/main.33a293f7.css",
+    "static/js/main.e320d571.js"
   ]
 }
