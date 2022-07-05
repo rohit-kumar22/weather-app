@@ -7,38 +7,43 @@ import winds from "../src/weather_images/winds.jpg";
 import sunny from "../src/weather_images/sunny.jpg";
 import snow from "../src/weather_images/snow.jpg";
 import brizzled from "../src/weather_images/bilzzard.jpg";
+import mist from "../src/weather_images/mist.jpg";
 
 function App() {
   const [data, setData] = useState({});
   const [location, setLocation] = useState("Delhi");
   const [myStyle, setMyStyle] = useState();
-  const apiKey = "674a720fc2716dfefe2675a2e6d0d8dd";
+  const apiKey = "c55e5de688dd5d78204f51ad73170e6e";
 
   const images = {
-    blizzard: { name: "Blizzard", path: brizzled },
+    blizzard: { name: "Drizzle", path: brizzled },
     snow: {
-      name: "Blowing snow, Freezing drizzle, Patchy snow possible, Mist, Freezing fog ",
+      name: "Snow",
       path: snow,
     },
-    sunny: { name: "Sunny", path: sunny },
+    sunny: { name: "Clear", path: sunny },
     rain: {
-      name: "Heavy rain,Heavy rain at times, Light rain, Moderate rain,Patchy freezing drizzle possible, Patchy light drizzle, Patchy light rain, Patchy rain Possible, Patchy sleet possible ",
+      name: "Rain",
       path: raining,
     },
     clouds: {
-      name: "cloudy,Partly cloudy, Overcast",
+      name: "Clouds",
       path: clouds,
     },
 
     thunder: {
-      name: "Light drizzle, Light freezing rain, Thundery outbreaks possible",
+      name: "Thunderstrom",
       path: thunderStrom,
+    },
+
+    mist: {
+      name: "Mist, Smoke, Haze, Dust, Fog, Sand, Ash, Squall, Tornado",
+      path: mist,
     },
   };
 
   useEffect(() => {
-    console.log(location);
-    const url = `http://api.weatherstack.com/current?access_key=${apiKey}&query=${location}`;
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&appid=${apiKey}`;
     fetch(url)
       .then((resp) => resp.status === 200 && resp.json())
       .then((data) => setData(data));
@@ -48,10 +53,10 @@ function App() {
   useEffect(() => {
     if (data) {
       const path = Object.values(images).find((img) =>
-        img.name.split(",").includes(data?.current?.weather_descriptions[0])
+        img.name.split(",").includes(data?.weather?.[0]?.main)
       )?.path
         ? Object.values(images).find((img) =>
-            img.name.split(",").includes(data?.current?.weather_descriptions[0])
+            img.name.split(",").includes(data?.weather?.[0]?.main)
           )?.path
         : winds;
 
@@ -82,26 +87,36 @@ function App() {
                 <div className="row" style={{ height: "60vh" }}>
                   <div
                     className="col-sm-12  d-flex"
-                    style={{ height: "60vh" }}></div>
+                    style={{ height: "50vh" }}></div>
                   <div className="col-sm-12 d-flex">
                     <h1
                       className="temprature ml-sm-5"
-                      style={{ margin: "0 0 0 5rem" }}>
-                      {data?.current?.temperature}°C
+                      style={{ margin: "2.5rem 0 0 5rem" }}>
+                      {Math.round(data?.main?.temp)}°C
                     </h1>
+
                     <p
-                      className="location  "
-                      style={{ margin: "1.5rem 0 0 2rem" }}>
-                      {data?.location?.name}
-                    </p>
-                    <p style={{ margin: "3rem 0 0 2rem", color: "white" }}>
-                      {data?.current?.weather_descriptions}
+                      style={{
+                        margin: "5rem 0 0 4rem",
+                        color: "white",
+                        fontSize: "2rem",
+                      }}>
+                      {data?.weather?.[0]?.main}{" "}
+                      <img
+                        src={`https://openweathermap.org/img/wn/${data?.weather?.[0]?.icon}.png`}></img>
                     </p>
                     <br></br>
                   </div>
-                  <div
-                    className="col-sm-12"
-                    style={{ textAlign: "center", color: "white" }}>
+                  <div className="row">
+                    <div className="col-sm-12">
+                      <p
+                        className="location  "
+                        style={{ margin: "2rem 0 0 5rem" }}>
+                        {data?.name}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="col-sm-12" style={{ textAlign: "center" }}>
                     <p>{data?.location?.localtime}</p>
                   </div>
                   <div className="col-sm-4 "> </div>
@@ -112,7 +127,7 @@ function App() {
                   <div className="search">
                     <input
                       onKeyPress={(event) => {
-                        if (event.key === "Enter") {
+                        if (event.key === "Enter" && event.target.value) {
                           setLocation(event.target.value);
                         }
                       }}
@@ -122,34 +137,34 @@ function App() {
                   <div className="table-div">
                     <table>
                       <tr>
-                        <td>Location</td>
-                        <td>
-                          {data?.location?.region}/{data?.location?.country}
-                        </td>
+                        <td>Country code</td>
+                        <td className="td_space">{data?.sys?.country}</td>
                       </tr>
                       <tr>
                         <td>Feels Like</td>
-                        <td>{data?.current?.feelslike}°C</td>
+                        <td className="td_space">
+                          {Math.round(data?.main?.feels_like)}°C
+                        </td>
                       </tr>
                       <tr>
                         <td>Pressure</td>
-                        <td>{data?.current?.pressure}MB</td>
+                        <td className="td_space">{data?.main?.pressure} mb</td>
                       </tr>
                       <tr>
                         <td>Humidity</td>
-                        <td>{data?.current?.humidity}%</td>
+                        <td className="td_space">{data?.main?.humidity}%</td>
                       </tr>
                       <tr>
                         <td>Wind</td>
-                        <td>{data?.current?.wind_speed}km/h</td>
+                        <td className="td_space">
+                          {Math.round(data?.wind?.speed)} km/h
+                        </td>
                       </tr>
                       <tr>
-                        <td>Precipitation</td>
-                        <td>{data?.current?.precip}mm</td>
-                      </tr>
-                      <tr>
-                        <td>UV Index</td>
-                        <td>{data?.current?.uv_index}</td>
+                        <td>Visibility</td>
+                        <td className="td_space">
+                          {data?.visibility / 1000} km
+                        </td>
                       </tr>
                     </table>
                   </div>
