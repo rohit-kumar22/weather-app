@@ -1,119 +1,106 @@
 import "./App.css";
 import React, { useState, useEffect } from "react";
-import weatherImg from "../src/weather_images/clouds.jpg";
+import clouds from "../src/weather_images/clouds.jpg";
+import raining from "../src/weather_images/raining.jpg";
+import thunderStrom from "../src/weather_images/thunderstorm.jpg";
+import winds from "../src/weather_images/winds.jpg";
+import sunny from "../src/weather_images/sunny.jpg";
+import snow from "../src/weather_images/snow.jpg";
+import brizzled from "../src/weather_images/bilzzard.jpg";
+
 function App() {
-  const responseHardCoded = {
-    request: {
-      type: "City",
-      query: "New York, United States of America",
-      language: "en",
-      unit: "m",
-    },
-    location: {
-      name: "New York",
-      country: "United States of America",
-      region: "New York",
-      lat: "40.714",
-      lon: "-74.006",
-      timezone_id: "America/New_York",
-      localtime: "2022-07-04 11:01",
-      localtime_epoch: 1656932460,
-      utc_offset: "-4.0",
-    },
-    current: {
-      observation_time: "03:01 PM",
-      temperature: 25,
-      weather_code: 116,
-      weather_icons: [
-        "https://assets.weatherstack.com/images/wsymbols01_png_64/wsymbol_0002_sunny_intervals.png",
-      ],
-      weather_descriptions: ["Partly cloudy"],
-      wind_speed: 9,
-      wind_degree: 30,
-      wind_dir: "NNE",
-      pressure: 1021,
-      precip: 0,
-      humidity: 37,
-      cloudcover: 25,
-      feelslike: 25,
-      uv_index: 7,
-      visibility: 16,
-      is_day: "yes",
-    },
-  };
-  const [data, setData] = useState(responseHardCoded);
+  const [data, setData] = useState({});
   const [location, setLocation] = useState("Delhi");
+  const [myStyle, setMyStyle] = useState();
   const apiKey = "674a720fc2716dfefe2675a2e6d0d8dd";
 
   const images = {
-    // hot:'.'
+    blizzard: { name: "Blizzard", path: brizzled },
+    snow: {
+      name: "Blowing snow, Freezing drizzle, Patchy snow possible, Mist, Freezing fog ",
+      path: snow,
+    },
+    sunny: { name: "Sunny", path: sunny },
+    rain: {
+      name: "Heavy rain,Heavy rain at times, Light rain, Moderate rain,Patchy freezing drizzle possible, Patchy light drizzle, Patchy light rain, Patchy rain Possible, Patchy sleet possible ",
+      path: raining,
+    },
+    clouds: {
+      name: "cloudy,Partly cloudy, Overcast",
+      path: clouds,
+    },
+
+    thunder: {
+      name: "Light drizzle, Light freezing rain, Thundery outbreaks possible",
+      path: thunderStrom,
+    },
   };
 
-  // useEffect(() => {
-  //   console.log(location);
-  //   const url = `http://api.weatherstack.com/current?access_key=${apiKey}&query=${location}`;
-  //   fetch(url)
-  //     .then((resp) => resp.status === 200 && resp.json())
-  //     .then((data) => setData(data));
-  //   console.log(data);
-  // }, [location]);
+  useEffect(() => {
+    console.log(location);
+    const url = `http://api.weatherstack.com/current?access_key=${apiKey}&query=${location}`;
+    fetch(url)
+      .then((resp) => resp.status === 200 && resp.json())
+      .then((data) => setData(data));
+    console.log(data);
+  }, [location]);
 
-  const myStyle = {
-    backgroundImage: `url(${weatherImg})`,
-    height: "100vh",
-    width: "100%",
+  useEffect(() => {
+    if (data) {
+      const path = Object.values(images).find((img) =>
+        img.name.split(",").includes(data?.current?.weather_descriptions[0])
+      )?.path
+        ? Object.values(images).find((img) =>
+            img.name.split(",").includes(data?.current?.weather_descriptions[0])
+          )?.path
+        : winds;
 
-    fontSize: "50px",
-    backgroundSize: "cover",
-    backgroundRepeat: "no-repeat",
-  };
+      if (path) {
+        const style = {
+          height: "100vh",
+          width: "100%",
+          backgroundImage: `url(${path})`,
+          fontSize: "50px",
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+        };
+        setMyStyle(style);
+      }
+    }
+  }, [data]);
+
+  const bImage = {};
   return (
     <div className="app">
-      {console.log("data", data)}
+      {console.log("data", myStyle)}
 
-      <div className="container-fluid" style={myStyle}>
+      <div className="container-fluid fade-in-animation" style={myStyle}>
         <div className="row">
-          <div className="col-12"></div>
           <div className="col-12">
             <div className="row">
               <div className="col-7">
-                <div className="row " style={{ height: "60vh" }}>
+                <div className="row" style={{ height: "60vh" }}>
                   <div
                     className="col-sm-12  d-flex"
                     style={{ height: "60vh" }}></div>
-                  <div
-                    className="col-sm-8 d-flex"
-                    style={{ margin: "0 0 0 5rem" }}>
-                    <h1 className="temprature ml-sm-5">
+                  <div className="col-sm-12 d-flex">
+                    <h1
+                      className="temprature ml-sm-5"
+                      style={{ margin: "0 0 0 5rem" }}>
                       {data?.current?.temperature}°C
                     </h1>
                     <p
                       className="location  "
-                      style={{ margin: "3rem 0 0 2rem" }}>
+                      style={{ margin: "1.5rem 0 0 2rem" }}>
                       {data?.location?.name}
                     </p>
-                    <br />
-                    <div style={{ marginTop: "5rem" }}>
-                      <span
-                        style={{
-                          fontSize: "1rem",
-                          fontWeight: "normal",
-                          color: "#fff",
-                        }}>
-                        {data?.location?.timezone_id}
-                      </span>
-                      <br />
-                      <span
-                        style={{
-                          fontSize: "1rem",
-                          fontWeight: "normal",
-                          color: "#fff",
-
-                          // marginLeft: "20rem",
-                        }}>
-                        {data?.location?.localtime}
-                      </span>
-                    </div>
+                    <p style={{ margin: "3rem 0 0 2rem", color: "white" }}>
+                      {data?.current?.weather_descriptions}
+                    </p>
+                    <br></br>
+                  </div>
+                  <div className="col-sm-12" style={{ textAlign: "center" }}>
+                    <p>{data?.location?.localtime}</p>
                   </div>
                   <div className="col-sm-4 "> </div>
                 </div>
@@ -133,8 +120,12 @@ function App() {
                   <div className="table-div">
                     <table>
                       <tr>
+                        <td>Feels Like</td>
+                        <td>{data?.current?.feelslike}°C</td>
+                      </tr>
+                      <tr>
                         <td>Pressure</td>
-                        <td>{data?.current?.pressure}</td>
+                        <td>{data?.current?.pressure}MB</td>
                       </tr>
                       <tr>
                         <td>Humidity</td>
@@ -145,8 +136,12 @@ function App() {
                         <td>{data?.current?.wind_speed}km/h</td>
                       </tr>
                       <tr>
-                        <td>Precipation</td>
-                        <td>{data?.current?.precip}</td>
+                        <td>Precipitation</td>
+                        <td>{data?.current?.precip}mm</td>
+                      </tr>
+                      <tr>
+                        <td>UV Index</td>
+                        <td>{data?.current?.uv_index}</td>
                       </tr>
                     </table>
                   </div>

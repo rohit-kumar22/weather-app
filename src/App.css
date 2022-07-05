@@ -17,6 +17,7 @@ h1{
 .right-detail-info{
   background-color: rgba(0, 0, 0, 0.3);
   height: 100vh;
+
 }
 .app .search{
   
@@ -72,14 +73,14 @@ h1{
   font-weight: 700 ;
 }
 .tempratur{
-  font-size: 5rem;
+  font-size: 7rem;
   font-weight: 800;
   color: #ffffff;
   padding-left: 2rem;
 }
 
 .location{
-  font-size: 1.5rem;
+  font-size: 3rem;
   font-weight: 600;
   color: #ffffff;
 
@@ -89,10 +90,31 @@ h1{
   font-size: 1.25rem;
   font-weight: 600;
   color: #ffffff6c;
-  margin-top: 15rem;
+  margin-top: 10rem;
   margin-left: 2rem;
 }
 .table-div> table > tr > td {
 padding: 1rem;
 }
+
+.col-5{
+  background: linear-gradient(315deg, #6daddb 0%, #313131 74%);
+}
+.fade-in-animation{
+  animation-name: fade-in;
+  animation-duration: 1s;
+  animation-timing-function: linear;
+  animation-direction: normal;
+}
+@keyframes fade-in {
+  from{
+opacity: 0;
+  }
+  to{
+opacity: 1;
+  }
+  
+}
+
+
 
